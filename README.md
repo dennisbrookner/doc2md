@@ -28,5 +28,6 @@ doc2md will automatically pick this up and document the classes in this order.
 * `pip install -e .`
 
 ## Usage
+:warning: Work in progress, currently, only the overview can be printed. :warning:
+
 Use `doc2md MODULENAME` from the command line (`doc2md --help` for help).
-:warning: Work in progress, currently, only the overview can be printed.
