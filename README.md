@@ -8,6 +8,7 @@ The resulting hierarchy is following the namespace based on the
 package's `__all__` attributes, thus correctly documenting possibly shortened
 import paths.
 
+
 ## Example
 Assuming the following package structure
 ```
@@ -23,21 +24,22 @@ In case your module is configured to import all possible components on the top l
 (_i.e._ `module.Foo` and `module.Bar`),
 _doc2md_ will automatically pick this up and document the classes in the correct
 namespace:
+```
+# **module** Package Overview
 
-### **module** Package Overview
-
-#### Submodules
+## Submodules
 * `module.submodule`
 
-#### Classes
+## Classes
 * `Foo`
 * `Bar`
-
+```
 
 
 ## Installation
 * `git clone`
 * `pip install -e .`
+
 
 ## Usage
 :warning: Work in progress, currently only the overview can be printed :warning:
