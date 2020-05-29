@@ -4,11 +4,11 @@ This package parses the docstrings of any installed Python module
 into a simple Markdown format, grouped by
 _submodules_, _classes_ and _functions_.
 The resulting hierarchy is following the order from the
-package's `__all__` attribute, thus correctly documenting possibly shortened
+package's `__all__` attributes, thus correctly documenting possibly shortened
 import paths.
 
 ## Example
-Assume the following package structure:
+Assuming the following package structure
 ```
 module
 ├── submodule
@@ -28,6 +28,6 @@ doc2md will automatically pick this up and document the classes in this order.
 * `pip install -e .`
 
 ## Usage
-:warning: Work in progress, currently, only the overview can be printed. :warning:
+:warning: Work in progress, currently only the overview can be printed. :warning:
 
 Use `doc2md MODULENAME` from the command line (`doc2md --help` for help).
