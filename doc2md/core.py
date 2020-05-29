@@ -14,25 +14,26 @@ def sort_modules(module) -> Dict:
     """ Run inspect on `module`, filter by component types """
     ret = {
         'name'      : module.__name__ if hasattr(module, '__name__') else None,
+        'doc'       : module.__doc__,
         'modules'   : [],
         'classes'   : [],
         'functions' : [],
         'others'    : [],
         }
-    ga = lambda string: getattr(module, string)
 
     if not hasattr(module, '__all__'):
         return ret
 
     for m in module.__all__:
-        if I.ismodule( ga(m) ):
-            ret['modules'].append( sort_modules(ga(m)) )
-        elif I.isclass( ga(m) ):
-            ret['classes'].append(m)
-        elif I.isfunction( ga(m) ):
-            ret['functions'].append(m)
+        a = getattr(module, m)
+        if I.ismodule(a):
+            ret['modules'].append(sort_modules(a))
+        elif I.isclass(a):
+            ret['classes'].append((m,a))
+        elif I.isfunction(a):
+            ret['functions'].append((m,a))
         else:
-            ret['others'].append(m)
+            ret['others'].append((m,None))
 
     return ret
 
@@ -46,10 +47,13 @@ def print_to(string, fname=None):
         print(string)
 
 
-def print_overview(sorted_modules, level=1, dirname=None, full=False) -> str:
+def print_overview(sorted_modules, level=1, dirname=None, full=True) -> str:
     d = sorted_modules
 
-    ret = f"{level*'#'} **{d['name']}** Module Overview\n\n"
+    ret = f"{level*'#'} **{d['name']}** Module Overview\n"
+    if full and d['doc']:
+        ret += d['doc']
+    ret += '\n'
 
     v = d['modules']
     if v != []:
@@ -58,22 +62,36 @@ def print_overview(sorted_modules, level=1, dirname=None, full=False) -> str:
             ret += f"* `{i['name']}`\n"
         ret += '\n'
 
-    if not full:
+    if not full: # Just print the names
         for k in ['classes', 'functions', 'others']:
             v = d[k]
             if v != []:
                 ret += f"{(level+1)*'#'} {k.capitalize()}\n"
                 for i in v:
-                    ret += f"* `{i}`\n"
+                    ret += f"* `{i[0]}`\n"
             ret += '\n'
 
-    else:
+    else: # Print names docstring for functions and class methods
         for k in ['classes', 'functions', 'others']:
             v = d[k]
             if v != []:
                 ret += f"{(level+1)*'#'} {k.capitalize()}\n"
                 for i in v:
-                    ret += f"* `{i}`\n"
+                    ret += f"* `{i[0]}`\n"
+                    if k == 'functions':
+                        if i[1].__doc__ is not None:
+                            ret += f"\n    ```\n    {i[1].__doc__}\n    ```\n\n"
+
+                    elif k == 'classes':
+                        if i[1].__doc__ is not None:
+                            ret += f"\n    ```\n    {i[1].__doc__}\n    ```\n\n"
+
+                        methods = {k:v for k,v in i[1].__dict__.items() if not k.startswith('_')}
+                        for k,v in methods.items():
+                            ret += f"  * `{i[0]}.{k}`\n"
+                            if hasattr(v, '__doc__') and v.__doc__ is not None:
+                                ret += f"\n      ```\n      {v.__doc__}\n      ```\n\n"
+                ret +='\n'
             ret += '\n'
 
 

@@ -16,8 +16,6 @@ class TestSimilarity(unittest.TestCase):
             self.basic(module)
             self.full(module)
 
-
-
     def basic(self, module):
         p = Popen(['doc2md', module], stdout=DEVNULL)
         p.communicate()
