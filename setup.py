@@ -4,7 +4,7 @@ from os.path import join as opj
 from doc2md import __version__
 
 NAME = 'doc2md'
-DESCR = 'Simple Python docstring to markdown parser.'
+DESCR = 'Simple Python docstring to Markdown parser.'
 packages = [NAME]+[f'{NAME}.'+i for i in find_packages(NAME)]
 
 setup(

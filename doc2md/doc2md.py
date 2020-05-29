@@ -23,7 +23,7 @@ def sort_modules(module):
 
     if not hasattr(module, '__all__'):
         return ret
-        
+
     for m in module.__all__:
         if I.ismodule( ga(m) ):
             ret['modules'].append( sort_modules(ga(m)) )
@@ -68,4 +68,4 @@ def print_overview(sorted_modules, level=1, dirname=None) -> str:
                 ret += f"* `{i}`\n"
         ret += '\n'
 
-    print_to(ret, opj(dirname, f"{d['name']}.doverview.md")) if dirname else print_to(ret)
+    print_to(ret, opj(dirname, f"{d['name']}.overview.md")) if dirname else print_to(ret)
