@@ -2,7 +2,7 @@
 
 This package parses the docstrings of any installed Python module
 into a simple Markdown format, grouped by
-_submodules_, _calsses_ and _functions_.
+_submodules_, _classes_ and _functions_.
 The resulting hierarchy is following the order from the
 package's `__all__` attribute, thus correctly documenting possibly shortened
 import paths.
