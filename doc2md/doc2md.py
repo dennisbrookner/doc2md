@@ -21,6 +21,9 @@ def sort_modules(module):
         }
     ga = lambda string: getattr(module, string)
 
+    if not hasattr(module, '__all__'):
+        return ret
+        
     for m in module.__all__:
         if I.ismodule( ga(m) ):
             ret['modules'].append( sort_modules(ga(m)) )
