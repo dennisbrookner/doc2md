@@ -11,7 +11,7 @@ setup(
     name             = NAME,
     version          = __version__,
     author           = 'Leo Komissarov',
-    author_email     = 'leonid.komissarov@gmail.com',
+    author_email     = 'leonid.komissarov@ugent.be',
     url              = f'https://github.com/oiao/{NAME}',
     download_url     = f'https://github.com/oiao/{NAME}/archive/master.zip',
     license          = 'GPLv3+',
