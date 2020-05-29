@@ -22,4 +22,4 @@ def __autoimport(use_only=None):
                 globals()[name] = vars(tmp)[name]
     return ret
 
-__all__ = __autoimport(['doc2md'])
+__all__ = __autoimport(['core'])

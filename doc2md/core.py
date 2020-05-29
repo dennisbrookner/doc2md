@@ -7,11 +7,11 @@ __version__ = '0.1'
 __all__ = [
     'sort_modules',
     'print_overview',
-    '__version__'
-    ]
+]
 
 
-def sort_modules(module):
+def sort_modules(module) -> Dict:
+    """ Run inspect on `module`, filter by component types """
     ret = {
         'name'      : module.__name__ if hasattr(module, '__name__') else None,
         'modules'   : [],
@@ -46,11 +46,10 @@ def print_to(string, fname=None):
         print(string)
 
 
-def print_overview(sorted_modules, level=1, dirname=None) -> str:
+def print_overview(sorted_modules, level=1, dirname=None, full=False) -> str:
     d = sorted_modules
 
-    strname = f"**{d['name']}**"
-    ret = f"{level*'#'} **{d['name']}** Package Overview\n\n"
+    ret = f"{level*'#'} **{d['name']}** Module Overview\n\n"
 
     v = d['modules']
     if v != []:
@@ -59,13 +58,23 @@ def print_overview(sorted_modules, level=1, dirname=None) -> str:
             ret += f"* `{i['name']}`\n"
         ret += '\n'
 
+    if not full:
+        for k in ['classes', 'functions', 'others']:
+            v = d[k]
+            if v != []:
+                ret += f"{(level+1)*'#'} {k.capitalize()}\n"
+                for i in v:
+                    ret += f"* `{i}`\n"
+            ret += '\n'
 
-    for k in ['classes', 'functions', 'others']:
-        v = d[k]
-        if v != []:
-            ret += f"{(level+1)*'#'} {k.capitalize()}\n"
-            for i in v:
-                ret += f"* `{i}`\n"
-        ret += '\n'
+    else:
+        for k in ['classes', 'functions', 'others']:
+            v = d[k]
+            if v != []:
+                ret += f"{(level+1)*'#'} {k.capitalize()}\n"
+                for i in v:
+                    ret += f"* `{i}`\n"
+            ret += '\n'
 
-    print_to(ret, opj(dirname, f"{d['name']}.overview.md")) if dirname else print_to(ret)
+
+    print_to(ret, opj(dirname, f"{d['name']}.md")) if dirname else print_to(ret)
