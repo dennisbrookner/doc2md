@@ -1,6 +1,6 @@
 Numpy example: `doc2md numpy`
 
-# **numpy** Package Overview
+# **numpy** Module Overview
 
 ## Submodules
 * `numpy.core.defchararray`
