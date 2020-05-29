@@ -1,0 +1,41 @@
+#!/usr/bin/env python
+
+import argparse
+import os, sys
+from importlib import import_module
+from doc2md import sort_modules, print_overview
+
+parser = argparse.ArgumentParser(description='doc2md: Docstring to Markdown parser.')
+parser.add_argument('module', help='Name of the module for which the docstrings shoud be generated.')
+parser.add_argument('-i', '--include', nargs='+', default='ALL', help='List of sub-components to be used for docstring generation.\nDefaults to ALL package\'s components.\nUse OVERVIEW to print the overview only.')
+parser.add_argument('-e', '--exclude', nargs='*', help='List of sub-components to be excluded drom docstring generation.')
+parser.add_argument('-l', '--level', type=int, default=1, help='The top-level header. Default (1) translates to <h1> headers')
+parser.add_argument('-o', '--out', default=None, help='Name of the output directory. Defaults to a print to stdout')
+args = parser.parse_args()
+
+
+# Import the requested module
+try:
+    module = import_module(args.module)
+except ImportError:
+    print(f"Cound not import module '{args.module}'. Make sure it is installed proeprly.")
+    exit(1)
+
+MODULES = sort_modules(module)
+
+# Create output directory
+if args.out is not None:
+    c = 0
+    out = args.out
+    while os.path.exists(out):
+        c += 1
+        out = args.out + f".{c:03d}"
+    if out != args.out:
+        print(f"{args.out} already exists, will use {out} instead.")
+    os.makedirs(out)
+else:
+    out = None
+
+
+if args.include == 'ALL':
+    print_overview(MODULES, level=args.level, dirname=out)
