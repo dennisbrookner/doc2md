@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 from os import sep
 from os.path import join as opj
-from doc2md import __version__
+from doc2md.core import __version__
 
 NAME = 'doc2md'
 DESCR = 'Simple Python docstring to Markdown parser.'
