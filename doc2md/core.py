@@ -86,7 +86,7 @@ def print_overview(sorted_modules, level=1, dirname=None, full=True) -> str:
                         if i[1].__doc__ is not None:
                             ret += f"\n    \n    {i[1].__doc__}\n    \n"
 
-                        properties = {k:v for k,v in i[1].__dict__.items() if (not k.startswith('_')) and isinstance(v, property}
+                        properties = {k:v for k,v in i[1].__dict__.items() if (not k.startswith('_')) and isinstance(v, property)}
                         if len(properties) != 0:
                             ret += f"{(level+2)*'#'}Properties of {i[0]} \n"
                                                                                                                     
@@ -95,7 +95,7 @@ def print_overview(sorted_modules, level=1, dirname=None, full=True) -> str:
                             if hasattr(v, '__doc__') and v.__doc__ is not None:
                                 ret += f"\n      ```\n      {v.__doc__}\n      ```\n\n"
                         
-                        methods = {k:v for k,v in i[1].__dict__.items() if (not k.startswith('_')) and isinstance(v, method}
+                        methods = {k:v for k,v in i[1].__dict__.items() if (not k.startswith('_')) and isinstance(v, method)}
                         if len(methods) != 0:
                             ret += f"{(level+2)*'#'}Methods of {i[0]} \n"
                         
