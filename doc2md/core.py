@@ -59,7 +59,7 @@ def print_overview(sorted_modules, level=1, dirname=None, full=True) -> str:
     if v != []:
         ret += f"{(level+1)*'#'} Submodules\n"
         for i in v:
-            ret += f"{(level+2)*'#'} `{i['name']}`\n"
+            ret += f"{(level+2)*'#'} `{i['name']}`"
         ret += '\n'
 
     if not full: # Just print the names
@@ -80,11 +80,11 @@ def print_overview(sorted_modules, level=1, dirname=None, full=True) -> str:
                     ret += f"{(level+2)*'#'} `{i[0]}`\n"
                     if k == 'functions':
                         if i[1].__doc__ is not None:
-                            ret += f"\n    ```\n    {i[1].__doc__}\n    ```\n\n"
+                            ret += f"    ```\n    {i[1].__doc__}\n    ```\n"
 
                     elif k == 'classes':
                         if i[1].__doc__ is not None:
-                            ret += f"\n    \n    {i[1].__doc__}\n    \n"
+                            ret += f"    \n    {i[1].__doc__}    \n"
 
                         properties = {k:v for k,v in i[1].__dict__.items() if (not k.startswith('_')) and isinstance(v, property)}
                         if len(properties) != 0:
@@ -93,7 +93,7 @@ def print_overview(sorted_modules, level=1, dirname=None, full=True) -> str:
                         for k,v in properties.items():
                             ret += f"{(level+3)*'#'} `{i[0]}.{k}`\n"
                             if hasattr(v, '__doc__') and v.__doc__ is not None:
-                                ret += f"\n      ```\n      {v.__doc__}\n      ```\n\n"
+                                ret += f"      ```\n      {v.__doc__}\n      ```\n"
                         
                         methods = {k:v for k,v in i[1].__dict__.items() if (not k.startswith('_')) and callable(v)}
                         if len(methods) != 0:
