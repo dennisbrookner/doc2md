@@ -59,7 +59,7 @@ def print_overview(sorted_modules, level=1, dirname=None, full=True) -> str:
     if v != []:
         ret += f"{(level+1)*'#'} Submodules\n"
         for i in v:
-            ret += f"* `{i['name']}`\n"
+            ret += f"{(level+2)*'#' `{i['name']}`\n"
         ret += '\n'
 
     if not full: # Just print the names
