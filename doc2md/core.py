@@ -77,7 +77,7 @@ def print_overview(sorted_modules, level=1, dirname=None, full=True) -> str:
             if v != []:
                 ret += f"{(level+1)*'#'} {k.capitalize()}\n"
                 for i in v:
-                    ret += f"* `{i[0]}`\n"
+                    ret += f"{(level+2)*'#'} `{i[0]}`\n"
                     if k == 'functions':
                         if i[1].__doc__ is not None:
                             ret += f"\n    ```\n    {i[1].__doc__}\n    ```\n\n"
@@ -88,7 +88,7 @@ def print_overview(sorted_modules, level=1, dirname=None, full=True) -> str:
 
                         methods = {k:v for k,v in i[1].__dict__.items() if not k.startswith('_')}
                         for k,v in methods.items():
-                            ret += f"  * `{i[0]}.{k}`\n"
+                            ret += f"  {(level+2)*'#'} `{i[0]}.{k}`\n"
                             if hasattr(v, '__doc__') and v.__doc__ is not None:
                                 ret += f"\n      ```\n      {v.__doc__}\n      ```\n\n"
                 ret +='\n'
