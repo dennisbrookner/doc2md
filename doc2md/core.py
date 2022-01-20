@@ -68,7 +68,7 @@ def print_overview(sorted_modules, level=1, dirname=None, full=True) -> str:
             if v != []:
                 ret += f"{(level+1)*'#'} {k.capitalize()}\n"
                 for i in v:
-                    ret += f"* `{i[0]}`\n"
+                    ret += f"{(level+2)*'#'} `{i[0]}`\n"
             ret += '\n'
 
     else: # Print names docstring for functions and class methods
@@ -84,7 +84,7 @@ def print_overview(sorted_modules, level=1, dirname=None, full=True) -> str:
 
                     elif k == 'classes':
                         if i[1].__doc__ is not None:
-                            ret += f"\n    ```\n    {i[1].__doc__}\n    ```\n\n"
+                            ret += f"\n    \n    {i[1].__doc__}\n    \n"
 
                         methods = {k:v for k,v in i[1].__dict__.items() if not k.startswith('_')}
                         for k,v in methods.items():
