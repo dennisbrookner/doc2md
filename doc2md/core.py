@@ -88,7 +88,7 @@ def print_overview(sorted_modules, level=1, dirname=None, full=True) -> str:
 
                         methods = {k:v for k,v in i[1].__dict__.items() if not k.startswith('_')}
                         for k,v in methods.items():
-                            ret += f"  {(level+2)*'#'} `{i[0]}.{k}`\n"
+                            ret += f"  {(level+3)*'#'} `{i[0]}.{k}`\n"
                             if hasattr(v, '__doc__') and v.__doc__ is not None:
                                 ret += f"\n      ```\n      {v.__doc__}\n      ```\n\n"
                 ret +='\n'
