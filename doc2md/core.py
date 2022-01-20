@@ -50,14 +50,14 @@ def print_to(string, fname=None):
 def print_overview(sorted_modules, level=1, dirname=None, full=True) -> str:
     d = sorted_modules
 
-    ret = f"{level*'#'} **{d['name']}** Module Overview\n"
+    ret = f"{level*'#'} {d['name']}\n"
     if full and d['doc']:
         ret += d['doc']
     ret += '\n'
 
     v = d['modules']
     if v != []:
-        ret += f"{(level+1)*'#'} Submodules\n"
+        ret += f"{(level)*'#'} Submodules\n"
         for i in v:
             ret += f"{(level+2)*'#'} `{i['name']}`"
         ret += '\n'
@@ -66,18 +66,18 @@ def print_overview(sorted_modules, level=1, dirname=None, full=True) -> str:
         for k in ['classes', 'functions', 'others']:
             v = d[k]
             if v != []:
-                ret += f"{(level+1)*'#'} {k.capitalize()}\n"
+                ret += f"**{k.capitalize()}**\n"
                 for i in v:
-                    ret += f"{(level+2)*'#'} `{i[0]}`\n"
+                    ret += f"{(level+1)*'#'} `{i[0]}`\n"
             ret += '\n'
 
     else: # Print names docstring for functions and class methods
         for k in ['classes', 'functions', 'others']:
             v = d[k]
             if v != []:
-                ret += f"{(level+1)*'#'} {k.capitalize()}\n"
+                ret += f"**{k.capitalize()}**\n"
                 for i in v:
-                    ret += f"{(level+2)*'#'} `{i[0]}`\n"
+                    ret += f"{(level+1)*'#'} `{i[0]}`\n"
                     if k == 'functions':
                         if i[1].__doc__ is not None:
                             ret += f" {I.getdoc(i[1])} \n"
@@ -88,21 +88,21 @@ def print_overview(sorted_modules, level=1, dirname=None, full=True) -> str:
 
                         properties = {k:v for k,v in i[1].__dict__.items() if (not k.startswith('_')) and isinstance(v, property)}
                         if len(properties) != 0:
-                            ret += f"{(level+2)*'#'} Properties of `{i[0]}` \n"
+                            ret += f"{(level+1)*'#'} Properties of `{i[0]}` \n"
                                                                                                                     
                         for k,v in properties.items():
-                            ret += f"{(level+3)*'#'} `{i[0]}.{k}`\n"
+                            ret += f"* {(level+3)*'#'} `{i[0]}.{k}`\n"
                             if hasattr(v, '__doc__') and v.__doc__ is not None:
-                                ret += f"{I.getdoc(v)} \n"
+                                ret += f"`{I.getdoc(v)}` \n"
                         
                         methods = {k:v for k,v in i[1].__dict__.items() if (not k.startswith('_')) and callable(v)}
                         if len(methods) != 0:
-                            ret += f"{(level+2)*'#'} Methods of `{i[0]}` \n"
+                            ret += f"{(level+1)*'#'} Methods of `{i[0]}` \n"
                         
                         for k,v in methods.items():
                             ret += f"{(level+3)*'#'} `{i[0]}.{k}`\n"
                             if hasattr(v, '__doc__') and v.__doc__ is not None:
-                                ret += f"\n{I.getdoc(v)} \n"
+                                ret += f"\n{v.__doc__} \n"
                 ret +='\n'
             ret += '\n'
 
