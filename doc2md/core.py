@@ -15,9 +15,9 @@ def sort_modules(module) -> Dict:
     ret = {
         'name'      : module.__name__ if hasattr(module, '__name__') else None,
         'doc'       : module.__doc__,
+        'functions' : [],
         'modules'   : [],
         'classes'   : [],
-        'functions' : [],
         'others'    : [],
         }
 
@@ -72,10 +72,10 @@ def print_overview(sorted_modules, level=1, dirname=None, full=True) -> str:
             ret += '\n'
 
     else: # Print names docstring for functions and class methods
-        for k in ['classes', 'functions', 'others']:
+        for k in ['functions', 'classes', 'others']:
             v = d[k]
             if v != []:
-                ret += f"**{k.capitalize()}**\n"
+                ret += f"{level*'#'} {k.capitalize()}\n"
                 for i in v:
                     ret += f"{(level+1)*'#'} `{i[0]}`\n"
                     if k == 'functions':
@@ -88,7 +88,7 @@ def print_overview(sorted_modules, level=1, dirname=None, full=True) -> str:
 
                         properties = {k:v for k,v in i[1].__dict__.items() if (not k.startswith('_')) and isinstance(v, property)}
                         if len(properties) != 0:
-                            ret += f"{(level+1)*'#'} Properties of `{i[0]}` \n"
+                            ret += f"{(level+2)*'#'} Properties of `{i[0]}` \n"
                                                                                                                     
                         for k,v in properties.items():
                             ret += f"* {(level+3)*'#'} `{i[0]}.{k}`\n"
@@ -97,7 +97,7 @@ def print_overview(sorted_modules, level=1, dirname=None, full=True) -> str:
                         
                         methods = {k:v for k,v in i[1].__dict__.items() if (not k.startswith('_')) and callable(v)}
                         if len(methods) != 0:
-                            ret += f"{(level+1)*'#'} Methods of `{i[0]}` \n"
+                            ret += f"{(level+2)*'#'} Methods of `{i[0]}` \n"
                         
                         for k,v in methods.items():
                             ret += f"{(level+3)*'#'} `{i[0]}.{k}`\n"
