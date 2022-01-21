@@ -50,7 +50,7 @@ def print_to(string, fname=None):
 def print_overview(sorted_modules, level=1, dirname=None, full=True) -> str:
     d = sorted_modules
 
-    ret = f"{level*'#'} {d['name']}\n"
+    ret = f"{level*'#'} `{d['name']}`\n"
     if full and d['doc']:
         ret += d['doc']
     ret += '\n'
@@ -80,7 +80,7 @@ def print_overview(sorted_modules, level=1, dirname=None, full=True) -> str:
                     ret += f"{(level+1)*'#'} `{i[0]}`\n"
                     if k == 'functions':
                         if i[1].__doc__ is not None:
-                            ret += f" {I.getdoc(i[1])} \n"
+                            ret += f"\n{i[1].__doc__} \n"
 
                     elif k == 'classes':
                         if i[1].__doc__ is not None:
